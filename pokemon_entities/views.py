@@ -78,7 +78,8 @@ def show_pokemon(request, pokemon_id):
     pokemon_data = {
         'pokemon_id': pokemon.id,
         'title_ru': pokemon.title,
-        'img_url': pokemon.image.url if pokemon.image else None
+        'img_url': pokemon.image.url if pokemon.image else None,
+        'description': pokemon.description
     }
 
     return render(request, 'pokemon.html', context={
