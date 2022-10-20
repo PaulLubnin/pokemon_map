@@ -9,6 +9,7 @@ class Pokemon(models.Model):
     description = models.TextField('Описание', blank=True, null=False)
     previous_evolution = models.ForeignKey('self', verbose_name='Из кого эволюционировал', on_delete=models.CASCADE,
                                            related_name='next_evolution', blank=True, null=True)
+    element_type = models.ManyToManyField('PokemonElementType', verbose_name='Стихия', blank=True, null=False)
 
     class Meta:
         verbose_name = 'Покемон'
@@ -36,3 +37,14 @@ class PokemonEntity(models.Model):
 
     def __str__(self):
         return f'{self.pokemon.title_ru}({self.id})'
+
+
+class PokemonElementType(models.Model):
+    title = models.CharField('Стихия покемона', max_length=35, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Стихия покемона'
+        verbose_name_plural = 'Стихии покемонов'
+
+    def __str__(self):
+        return self.title
