@@ -2,11 +2,11 @@ from django.db import models  # noqa F401
 
 
 class Pokemon(models.Model):
-    title_ru = models.CharField('Название на русском', max_length=200, blank=True, null=True)
-    title_en = models.CharField('Название на английском', max_length=200, blank=True, null=True)
-    title_jp = models.CharField('Название на японском', max_length=200, blank=True, null=True)
+    title_ru = models.CharField('Название на русском', max_length=200, blank=False, null=False)
+    title_en = models.CharField('Название на английском', max_length=200, blank=True, null=False)
+    title_jp = models.CharField('Название на японском', max_length=200, blank=True, null=False)
     image = models.ImageField('Изображение', blank=True, null=True)
-    description = models.TextField('Описание', blank=True, null=True)
+    description = models.TextField('Описание', blank=True, null=False)
     previous_evolution = models.ForeignKey('self', verbose_name='Из кого эволюционировал', on_delete=models.CASCADE,
                                            related_name='next_evolution', blank=True, null=True)
 
@@ -19,7 +19,7 @@ class Pokemon(models.Model):
 
 
 class PokemonEntity(models.Model):
-    pokemon = models.ForeignKey(Pokemon, verbose_name='Покемон', null=True, on_delete=models.SET_NULL)
+    pokemon = models.ForeignKey(Pokemon, verbose_name='Покемон', on_delete=models.CASCADE, blank=False, null=True)
     lat = models.FloatField('Широта', blank=True, null=True)
     lon = models.FloatField('Долгота', blank=True, null=True)
     appeared_at = models.DateTimeField('Появление', blank=True, null=True)
