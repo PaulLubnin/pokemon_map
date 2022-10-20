@@ -88,7 +88,7 @@ def show_pokemon(request, pokemon_id):
         pokemon_data['previous_evolution'] = {
             'title_ru': pokemon.previous_evolution.title_ru,
             'pokemon_id': pokemon.previous_evolution.id,
-            'img_url': pokemon.previous_evolution.image.url
+            'img_url': pokemon.previous_evolution.image.url if pokemon.image else None,
         }
 
     if pokemon.next_evolution.all():
@@ -96,7 +96,7 @@ def show_pokemon(request, pokemon_id):
             pokemon_data['next_evolution'] = {
                 'title_ru': pokemon.title_ru,
                 'pokemon_id': pokemon.id,
-                'img_url': pokemon.image.url
+                'img_url': pokemon.image.url if pokemon.image else None,
             }
 
     return render(request, 'pokemon.html', context={
