@@ -2,26 +2,37 @@ from django.db import models  # noqa F401
 
 
 class Pokemon(models.Model):
-    title_ru = models.CharField(max_length=200, verbose_name='Название на русском', blank=True, null=True)
-    title_en = models.CharField(max_length=200, verbose_name='Название на английском', blank=True, null=True)
-    title_jp = models.CharField(max_length=200, verbose_name='Название на японском', blank=True, null=True)
-    image = models.ImageField(blank=True, null=True)
-    description = models.TextField(verbose_name='Описание', blank=True, null=True)
-    previous_evolution = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name='Из кого эволюционировал',
+    title_ru = models.CharField('Название на русском', max_length=200, blank=True, null=True)
+    title_en = models.CharField('Название на английском', max_length=200, blank=True, null=True)
+    title_jp = models.CharField('Название на японском', max_length=200, blank=True, null=True)
+    image = models.ImageField('Изображение', blank=True, null=True)
+    description = models.TextField('Описание', blank=True, null=True)
+    previous_evolution = models.ForeignKey('self', verbose_name='Из кого эволюционировал', on_delete=models.CASCADE,
                                            related_name='next_evolution', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Покемон'
+        verbose_name_plural = 'Покемоны'
 
     def __str__(self):
         return self.title_ru
 
 
 class PokemonEntity(models.Model):
-    pokemon = models.ForeignKey(Pokemon, null=True, on_delete=models.SET_NULL)
-    lat = models.FloatField(blank=True, null=True)
-    lon = models.FloatField(blank=True, null=True)
-    appeared_at = models.DateTimeField(blank=True, null=True)
-    disappeared_at = models.DateTimeField(blank=True, null=True)
-    level = models.IntegerField(blank=True, null=True)
-    health = models.IntegerField(blank=True, null=True)
-    strength = models.IntegerField(blank=True, null=True)
-    defence = models.IntegerField(blank=True, null=True)
-    stamina = models.IntegerField(blank=True, null=True)
+    pokemon = models.ForeignKey(Pokemon, verbose_name='Покемон', null=True, on_delete=models.SET_NULL)
+    lat = models.FloatField('Широта', blank=True, null=True)
+    lon = models.FloatField('Долгота', blank=True, null=True)
+    appeared_at = models.DateTimeField('Появление', blank=True, null=True)
+    disappeared_at = models.DateTimeField('Исчезновение', blank=True, null=True)
+    level = models.IntegerField('Уровень', blank=True, null=True)
+    health = models.IntegerField('Здоровье', blank=True, null=True)
+    strength = models.IntegerField('Сила', blank=True, null=True)
+    defence = models.IntegerField('Защита', blank=True, null=True)
+    stamina = models.IntegerField('Энергия', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Сущность покемона'
+        verbose_name_plural = 'Сущности покемонов'
+
+    def __str__(self):
+        return f'{self.pokemon.title_ru}({self.id})'
