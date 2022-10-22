@@ -71,7 +71,7 @@ def show_pokemon(request, pokemon_id):
             pokemon_entity.pokemon.image.path if pokemon_entity.pokemon.image else None
         )
 
-    pokemon_data = {
+    pokemon_serialized = {
         'pokemon_id': pokemon.id,
         'title_ru': pokemon.title_ru,
         'title_en': pokemon.title_en,
@@ -81,7 +81,7 @@ def show_pokemon(request, pokemon_id):
     }
 
     if pokemon.previous_evolution:
-        pokemon_data['previous_evolution'] = {
+        pokemon_serialized['previous_evolution'] = {
             'title_ru': pokemon.previous_evolution.title_ru,
             'pokemon_id': pokemon.previous_evolution.id,
             'img_url': pokemon.previous_evolution.image.url if pokemon.image else None,
@@ -89,7 +89,7 @@ def show_pokemon(request, pokemon_id):
 
     if pokemon.next_evolutions.all():
         for pokemon in pokemon.next_evolutions.all():
-            pokemon_data['next_evolution'] = {
+            pokemon_serialized['next_evolution'] = {
                 'title_ru': pokemon.title_ru,
                 'pokemon_id': pokemon.id,
                 'img_url': pokemon.image.url if pokemon.image else None,
@@ -97,5 +97,5 @@ def show_pokemon(request, pokemon_id):
 
     return render(request, 'pokemon.html', context={
         'map': folium_map._repr_html_(),
-        'pokemon': pokemon_data
+        'pokemon': pokemon_serialized
     })
