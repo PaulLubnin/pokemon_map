@@ -61,7 +61,7 @@ def show_pokemon(request, pokemon_id):
     except Pokemon.DoesNotExist:
         return HttpResponseNotFound(f'<h1>Такой покемон не найден</h1>')
 
-    active_pokemons = PokemonEntity.objects.filter(
+    active_pokemons = pokemon.entities_pokemons.filter(
         pokemon_id=pokemon.id,
         appeared_at__lte=localtime().now(),
         disappeared_at__gte=localtime().now()
@@ -91,8 +91,8 @@ def show_pokemon(request, pokemon_id):
             'img_url': pokemon.previous_evolution.image.url if pokemon.image else None,
         }
 
-    if pokemon.next_evolution.all():
-        for pokemon in pokemon.next_evolution.all():
+    if pokemon.next_evolutions.all():
+        for pokemon in pokemon.next_evolutions.all():
             pokemon_data['next_evolution'] = {
                 'title_ru': pokemon.title_ru,
                 'pokemon_id': pokemon.id,
