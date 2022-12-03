@@ -57,7 +57,7 @@ def show_all_pokemons(request):
 def show_pokemon(request, pokemon_id):
     pokemon = get_object_or_404(Pokemon, id=pokemon_id)
 
-    active_pokemons = pokemon.entities_pokemons.filter(
+    active_pokemons = pokemon.entities.filter(
         pokemon_id=pokemon.id,
         appeared_at__lte=localtime().now(),
         disappeared_at__gte=localtime().now()

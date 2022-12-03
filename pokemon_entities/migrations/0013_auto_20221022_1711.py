@@ -24,6 +24,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='pokemonentity',
             name='pokemon',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='entities_pokemons', to='pokemon_entities.pokemon', verbose_name='Покемон'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='entities', to='pokemon_entities.pokemon', verbose_name='Покемон'),
         ),
     ]
